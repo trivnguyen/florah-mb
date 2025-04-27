@@ -5,8 +5,8 @@ import torch
 import torch.nn as nn
 import math
 
-from florah.models import MLP
-from florah import models_utils
+from models.models import MLP
+from models import models_utils
 
 class FourierTimeEmbedding(nn.Module):
     def __init__(self, emb_size: int) -> None:

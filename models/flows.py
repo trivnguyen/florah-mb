@@ -1,4 +1,3 @@
-
 from typing import Optional
 
 import torch
@@ -36,8 +35,8 @@ class NPE(nn.Module):
                 out_proj_dim = context_embedding_sizes[i]
                 self.lin_proj_layers.append(nn.Linear(in_proj_dim, out_proj_dim))
                 self.lin_proj_layers.append(nn.ReLU())
-                # self.lin_proj_layers.append(nn.BatchNorm1d(out_proj_dim))
-                # self.lin_proj_layers.append(nn.Dropout(dropout))
+                self.lin_proj_layers.append(nn.BatchNorm1d(out_proj_dim))
+                self.lin_proj_layers.append(nn.Dropout(dropout))
             self.lin_proj_layers = nn.Sequential(*self.lin_proj_layers)
             self.flow = zuko.flows.NSF(
                 input_size, context_embedding_sizes[-1], transforms=num_transforms,

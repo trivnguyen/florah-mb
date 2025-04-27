@@ -1,8 +1,3 @@
-# florah-mb
-FLORAH main branch
+# FLORAH Tree Generator
 
-Example run:
-
-```
-python train.py --config configs/config.py
-```
+You can find the trained models on Rusty: `/mnt/ceph/users/tnguyen/florah-tree-models`
