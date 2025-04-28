@@ -126,7 +126,6 @@ def train(
     # Done
     logging.info("Done!")
 
-
 if __name__ == "__main__":
     FLAGS = flags.FLAGS
     config_flags.DEFINE_config_file(
@@ -135,8 +134,25 @@ if __name__ == "__main__":
         "File path to the training or sampling hyperparameter configuration.",
         lock_config=True,
     )
+    flags.DEFINE_boolean(
+        "debug",
+        False,
+        "If set to True, activates debug configuration.",
+    )
     # Parse flags
     FLAGS(sys.argv)
 
+    if FLAGS.debug:
+        print("Debug mode activated.")
+        # copy the config with some argument changes
+        config = FLAGS.config
+        config.workdir = 'debug'
+        config.name = 'debug'
+        config.overwrite = True
+        config.enable_progress_bar = True
+        config.data.num_files = 1
+    else:
+        config = FLAGS.config
+
     # Start training run
-    train(config=FLAGS.config, workdir=FLAGS.config.workdir)
+    train(config=config, workdir=config.workdir)
