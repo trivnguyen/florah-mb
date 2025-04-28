@@ -2,6 +2,7 @@ from typing import List, Optional, Tuple
 
 import os
 import pickle
+from tqdm import tqdm
 
 import ml_collections
 import numpy as np
@@ -18,11 +19,11 @@ def read_dataset(
 ):
     data = []
     data_dir = os.path.join(dataset_root, dataset_name)
-    for i in range(index_start, index_start + max_num_files):
+    for i in tqdm(range(index_start, index_start + max_num_files)):
         data_path = os.path.join(data_dir, "{}.{}.pkl".format(prefix, i))
         if os.path.exists(data_path):
             with open(data_path, 'rb') as f:
-                data += pickle.load(f)
+                data.extend(pickle.load(f))
             if verbose:
                 print("Loading data from {}...".format(data_path))
         else:

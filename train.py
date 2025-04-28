@@ -55,13 +55,16 @@ def train(
         yaml.dump(config_dict, f, default_flow_style=False)
 
     # load dataset and prepare dataloader
+    logging.info("Loading dataset ...")
+    data = datasets.read_dataset(
+        dataset_root=config.data.root,
+        dataset_name=config.data.name,
+        max_num_files=config.data.get("num_files", 1),
+    )
+
     logging.info("Preparing dataloader...")
     train_loader, val_loader, norm_dict = datasets.prepare_dataloader(
-        datasets.read_dataset(
-            dataset_root=config.data.root,
-            dataset_name=config.data.name,
-            max_num_files=config.data.get("num_files", 1),
-        ),
+        data,
         train_frac=config.data.train_frac,
         train_batch_size=config.training.train_batch_size,
         eval_batch_size=config.training.eval_batch_size,
